@@ -1,70 +1,60 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# prueba Arengu
 
-## Available Scripts
+## About
+For my birthday this year I decided to create some 'real' mixtapes with my Spotify playlists, like in a jewel case and burned into real CDs. Inside they had a little card with a "QR-like" spotify code in order to let the people which I gave the cds to enjoy the music directly in Spotify even if they didn't have a CD player. Everything would have been so much easier if instead of going one by one to the playlists in my phone, taking an screenshot and color the image in a color that looked good with the cover colors, I would have created this 🤪
 
-In the project directory, you can run:
+This apps allows you to see your Spotify playlists with that code I was talking about and some details like its name description and cover photo. I used an external library that gave me the prominent color from each cover (the 'muted' one, because if for example it was yellow, as the 'code' is white, it would be difficult to distinguish and the scanning doesn't work). You can favorite some of them in order to have an easy access, and you can also click on the cover photo in order to check the songs they have inside. I really liked creating this project so I expect you to have as much fun as I had developing this :)
 
-### `npm start`
+## Project structure
+* ```/components``` Contains PlaylistCard component along with its custom css file and a helper file with a method I use inside.
+* ```/redux``` Everything related to the store, we can se two different folders with sagas and reducers and the file initizaling the store.
+* ```/redux/reducers``` Folder with three files each representing one of the slices in which I divided the store.
+* ```/redux/sagas``` Three different folders which contains the saga correspoding to each slice and also an API class extracting all the fetch methods. Also has a helpers file with methods for managing the auth logic, and a rootSaga in order to have every saga in one place (and use it in the store inicialization)
+* ```/redux/tests``` Contains two different folders separating the views' tests to the component's ones. Also has a helpers file that allows me to 'decorate' the mount method needed for the tests. 
+* ```/redux/views``` Contains 3 different files with the main views components. 
+* ```/redux/App``` Main component used to basically initialize the router.
+* ```/redux/styles``` Some default css and classes that are use all along the app.  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Project setup
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+You can check the project deployed on [Vercel](https://prueba-arengu.vercel.app/) with my own playlists
 
-### `npm test`
+**IMPORTANT NOTE: For the project to work locally you will need a .env with this two variables defined:
+```
+REACT_APP_SPOTIFY_CLIENT_ID=
+REACT_APP_SPOTIFY_CLIENT_SECRET=
+```
+You can check how to get them here: https://developer.spotify.com/dashboard/
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+In order to run the project locally first you have to install the dependencies:
+```
+npm install
+```
 
-### `npm run build`
+then you can run it by running the command:
+```
+npm start
+```
+check the tests:
+```
+npm test
+```
+(probably you'll have to press 'a' after)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+and in case you want the build you just have to run:
+```
+npm run build
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Design patterns
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Along the project I could see the following patterns:
+* Composite: It is used in all the views that have inside another components, in this example FavoritePlaylists and Playlists with PlaylistCard
+* Decorator: It's used in the fetchSpotify method, as we are adding extra logic to the default fetch, and also in the renderComponent helper method from the tests, as I'm adding to the mount some initial state (and other options in case they were needed)
+* Flux: Of course this pattern is used as well as I'm working with Redux and we centralize of all data in the store
+* Observer: I think we can see a kind of observer pattern in the useEffect when we are defining some dependencies, as it could be the id in the Songs view
 
-### `npm run eject`
+## Next steps?
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+For improving this project I would of course improve the styles as I did a very very basic design, as well as adding the logic to refresh the token in case you spent too much time in the app. Also some redux saga tests and better loadings and error handlings (right now the project is managing them but in a very simple way which could be improved and it will make sense to do if the project grows larger)
