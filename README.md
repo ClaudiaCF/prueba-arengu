@@ -34,7 +34,7 @@ npm install
 
 then you can run it by running the command:
 ```
-npm start
+npm run start
 ```
 check the tests:
 ```
